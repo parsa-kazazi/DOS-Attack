@@ -1,11 +1,11 @@
 # DOS Attack
-Quick and easy DOS attack (Daniel Of Service)
+<p>Quick and easy DOS attack (Daniel Of Service)</p>
 
-Coded by parsa kazazi
-Works on all operating systems
-For legal activities only
+<p>Coded by parsa kazazi</p>
+<p>Works on all operating systems</p>
+<p>For legal activities only</p>
 
-How to use:
+<p>How to use : </p>
 <pre>
 > git clone https://github.com/parsa-kazazi/DOS-Attack
 > cd DOS-Attack
