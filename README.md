@@ -9,5 +9,5 @@
 <pre>
 > git clone https://github.com/parsa-kazazi/DOS-Attack
 > cd DOS-Attack
-> python3 dos-attack.py
+> python3 dos.py
 </pre>
