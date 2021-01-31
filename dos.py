@@ -256,7 +256,7 @@ Accept-Language: en-US,en;q=0.9
             try:
                 now_time = str(time.strftime("%Y-%m-%d %H:%M:%S"))
                 if (urllib.request.urlopen(url)):
-                    print(good + now_time + " ==> Request sent to " + str(url))
+                    print(good + now_time + " ==> Request Sent to " + str(url))
                 else:
                     sock.shutdown()
                     print(error + now_time + " ==> Shut down")
