@@ -1,5 +1,5 @@
 # DOS Attack
-<p>Quick and easy DOS attack (Deinal Of Service)</p>
+<p>Quick and easy DOS attack (Denial Of Service)</p>
 
 <p>Coded by parsa kazazi</p>
 <p>Works on all operating systems</p>
